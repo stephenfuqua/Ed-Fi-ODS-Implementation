@@ -33,11 +33,12 @@ jobs:
           repository: ${{ github.repository_owner }}/Ed-Fi-ODS
           path: Ed-Fi-ODS
 
-      - name: Install the Code Generation Utility
+      - name: Install and run the Code Generation Utility
         working-directory: Ed-Fi-ODS-Implementation
+        shell: pwsh
         run: |
           ./Initialize-PowershellForDevelopment.ps1
-          Install-CodeGenUtility
+          Invoke-CodeGen -Engine PostgreSQL -StandardVersion 6.0.0 -ExtensionVersion 1.0.0
 
       - name: Restore NuGet packages
         working-directory: Ed-Fi-ODS-Implementation

@@ -66,14 +66,6 @@
 
 - Building and running tests in this repository requires use of PowerShell Core (pwsh).
 - Start a PowerShell Core terminal.
-- Run the following script to build the source code:
-
-  ```pwsh
-  ./Initialize-PowershellForDevelopment.ps1
-  Invoke-CodeGen -Engine PostgreSQL -StandardVersion 6.0.0 -ExtensionVersion 1.0.0
-  dotnet build --no-restore ./Application/Ed-Fi-Ods.sln
-  ```
-
 - Do not attempt to run tests.
 
 ### Resource Management
