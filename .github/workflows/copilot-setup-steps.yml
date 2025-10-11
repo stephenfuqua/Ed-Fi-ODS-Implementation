@@ -38,7 +38,8 @@ jobs:
         shell: pwsh
         run: |
           ./Initialize-PowershellForDevelopment.ps1
-          Invoke-CodeGen -Engine PostgreSQL -StandardVersion 6.0.0 -ExtensionVersion 1.0.0
+          # Note: the repository root has an extra `Ed-Fi-ODS-Implementation` folder in the path
+          Invoke-CodeGen -Engine PostgreSQL -RepositoryRoot $env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation -StandardVersion 6.0.0 -ExtensionVersion 1.0.0
 
       - name: Restore NuGet packages
         working-directory: Ed-Fi-ODS-Implementation
