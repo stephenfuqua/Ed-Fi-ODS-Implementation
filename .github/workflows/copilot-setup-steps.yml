@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: Apache-2.0
+# Licensed to the Ed-Fi Alliance under one or more agreements.
+# The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
+# See the LICENSE and NOTICES files in the project root for more information.
+
+name: Copilot Setup Steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/copilot-setup-steps.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/copilot-setup-steps.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  copilot-setup-steps:
+    name: Copilot Setup Steps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          path: Ed-Fi-ODS
+
+      - name: Clone the Ed-Fi-ODS-Implementation repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          repository: Ed-Fi-Alliance/Ed-Fi-ODS-Implementation
+          path: Ed-Fi-ODS-Implementation
+
+      - name: Install the Code Generation Utility
+        working-directory: Ed-Fi-ODS-Implementation
+        run: |
+          ./Initialize-PowershellForDevelopment.ps1
+          Install-CodeGenUtility
+
+      - name: Restore NuGet packages
+        working-directory: Ed-Fi-ODS-Implementation
+        run: dotnet restore ./Application/Ed-Fi-Ods.sln
