@@ -24,14 +24,11 @@ jobs:
     steps:
       - name: Checkout the Ed-Fi-ODS-Implementation repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          path: Ed-Fi-ODS-Implementation
 
       - name: Checkout the Ed-Fi-ODS repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           repository: ${{ github.repository_owner }}/Ed-Fi-ODS
-          path: Ed-Fi-ODS
 
       - name: Install and run the Code Generation Utility
         working-directory: Ed-Fi-ODS-Implementation
