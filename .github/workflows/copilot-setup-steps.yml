@@ -22,6 +22,7 @@ jobs:
     name: Copilot Setup Steps
     runs-on: ubuntu-latest
     steps:
+      # Important: do not try to check this out to a different path - Coding Agent gets confused.
       - name: Checkout the Ed-Fi-ODS-Implementation repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
@@ -29,9 +30,11 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           repository: ${{ github.repository_owner }}/Ed-Fi-ODS
+          # Note that this is checking out in the parent, which makes this a peer to Ed-Fi-ODS-Implementation.
+          path: ../Ed-Fi-ODS
 
       - name: Install and run the Code Generation Utility
-        working-directory: Ed-Fi-ODS-Implementation
+        # The working directory is automatically Ed-Fi-ODS-Implementation.
         shell: pwsh
         run: |
           ./Initialize-PowershellForDevelopment.ps1
@@ -39,5 +42,4 @@ jobs:
           Invoke-CodeGen -Engine PostgreSQL -RepositoryRoot $env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation -StandardVersion 6.0.0 -ExtensionVersion 1.0.0
 
       - name: Restore NuGet packages
-        working-directory: Ed-Fi-ODS-Implementation
         run: dotnet restore ./Application/Ed-Fi-Ods.sln
